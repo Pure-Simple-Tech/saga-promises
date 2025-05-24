@@ -2,6 +2,8 @@ import { assertEquals } from "https://deno.land/std@0.220.1/assert/mod.ts";
 import { describe, it } from "jsr:@std/testing/bdd";
 import { createDelayedPromise } from "../../src/utils/promise.utils.ts";
 
+// TODO -> use fake timers to make tests run faster
+
 describe("createDelayedPromise", () => {
   it("should resolve after default delay of 1000ms", async () => {
     const defaultDelay = 1000;
@@ -23,7 +25,7 @@ describe("createDelayedPromise", () => {
     const customDelay = 1500;
     const startTime = Date.now();
 
-    await createDelayedPromise(customDelay);
+    await createDelayedPromise({ delayMs: customDelay });
 
     const endTime = Date.now();
     const duration = endTime - startTime;

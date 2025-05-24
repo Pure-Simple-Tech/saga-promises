@@ -1,13 +1,23 @@
 /**
+ * Configuration options for creating a delayed promise
+ */
+export interface DelayedPromiseConfig {
+  /** The delay in milliseconds before the promise settles (default: 1000) */
+  delayMs?: number;
+  /** The percentage chance (0-100) of the promise rejecting instead of resolving (default: 0) */
+  rejectPercentage?: number;
+}
+
+/**
  * Creates a promise that resolves or rejects after a specified delay
- * @param delayMs - The delay in milliseconds before the promise settles (default: 3000)
- * @param rejectPercentage - The percentage chance (0-100) of the promise rejecting instead of resolving (default: 0)
+ * @param config - Configuration options for the promise
  * @returns A promise that resolves after the specified delay, or rejects based on the rejectPercentage
  */
 export function createDelayedPromise(
-  delayMs: number = 1000,
-  rejectPercentage: number = 0
+  config: DelayedPromiseConfig = {}
 ): Promise<void> {
+  const { delayMs = 1000, rejectPercentage = 0 } = config;
+
   return new Promise((resolve, reject) => {
     // Ensure rejectPercentage is between 0 and 100
     const normalizedRejectPercentage = Math.max(
